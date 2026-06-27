@@ -252,8 +252,6 @@
               <div class="carousel-item active">
                 <img src="logo.jpeg" class="d-block w-100" alt="1">
               </div>
-             
-             
             </div>
           </div>
         </div>
@@ -434,7 +432,48 @@
   <script>
     AOS.init({ duration: 1000, once: true });
 
-    
+    // كود تحريك الأرقام المضاف تلقائياً دون التعديل على التصميم
+    document.addEventListener("DOMContentLoaded", () => {
+      const counters = document.querySelectorAll('.stat-number');
+      
+      counters.forEach(counter => {
+        const fullText = counter.innerText.trim();
+        const numberMatch = fullText.match(/\d+/);
+        
+        if (numberMatch) {
+          const targetNumber = parseInt(numberMatch[0], 10);
+          const hasPlusPrefix = fullText.startsWith('+');
+          const hasPlusSuffix = fullText.endsWith('+');
+          
+          let startNumber = 0;
+          const duration = 1500; // مدة الحركة بالملي ثانية
+          const startTime = performance.now();
+          
+          const updateCounter = (currentTime) => {
+            const elapsedTime = currentTime - startTime;
+            const progress = Math.min(elapsedTime / duration, 1);
+            
+            // تأثير حركة سلس (Ease-out)
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            const currentCount = Math.floor(easeProgress * targetNumber);
+            
+            let displayText = currentCount;
+            if (hasPlusPrefix) displayText = '+' + displayText;
+            if (hasPlusSuffix) displayText = displayText + '+';
+            
+            counter.innerText = displayText;
+            
+            if (progress < 1) {
+              requestAnimationFrame(updateCounter);
+            } else {
+              counter.innerText = fullText; // التأكد من كتابة الرقم الأصلي بدقة عند الانتهاء
+            }
+          };
+          
+          requestAnimationFrame(updateCounter);
+        }
+      });
+    });
   </script>
 </body>
 </html>
