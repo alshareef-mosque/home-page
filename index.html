@@ -265,28 +265,28 @@
         <div class="col" data-aos="fade-up">
           <div class="stat-card">
             <i class="fa-solid fa-graduation-cap stat-icon"></i>
-            <span class="stat-number">+350</span>
+            <span class="stat-number" data-target="350">+0</span>
             <span class="stat-label">طالب مستفيد</span>
           </div>
         </div>
         <div class="col" data-aos="fade-up" data-aos-delay="100">
           <div class="stat-card">
             <i class="fa-solid fa-mosque stat-icon"></i>
-            <span class="stat-number">18</span>
+            <span class="stat-number" data-target="18">0</span>
             <span class="stat-label">حلقة قرآنية</span>
           </div>
         </div>
         <div class="col" data-aos="fade-up" data-aos-delay="200">
           <div class="stat-card">
             <i class="fa-solid fa-user-tie stat-icon"></i>
-            <span class="stat-number">20</span>
+            <span class="stat-number" data-target="20">0</span>
             <span class="stat-label">معلم متقن</span>
           </div>
         </div>
         <div class="col" data-aos="fade-up" data-aos-delay="300">
           <div class="stat-card">
             <i class="fa-solid fa-book-open-reader stat-icon"></i>
-            <span class="stat-number">5000+</span>
+            <span class="stat-number" data-target="5000">0+</span>
             <span class="stat-label">جزء مراجع</span>
           </div>
         </div>
@@ -432,48 +432,49 @@
   <script>
     AOS.init({ duration: 1000, once: true });
 
-    // كود تحريك الأرقام المضاف تلقائياً دون التعديل على التصميم
-    document.addEventListener("DOMContentLoaded", () => {
-      const counters = document.querySelectorAll('.stat-number');
-      
-      counters.forEach(counter => {
-        const fullText = counter.innerText.trim();
-        const numberMatch = fullText.match(/\d+/);
-        
-        if (numberMatch) {
-          const targetNumber = parseInt(numberMatch[0], 10);
-          const hasPlusPrefix = fullText.startsWith('+');
-          const hasPlusSuffix = fullText.endsWith('+');
+    // كود تحريك الأرقام الذكي عند النزول لقسم الإحصائيات
+    const counters = document.querySelectorAll('.stat-number');
+    const speed = 100; // سرعة العداد كل ما قل الرقم زادت السرعة
+
+    const startCounters = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counter = entry.target;
+          const target = +counter.getAttribute('data-target');
+          const hasPlusPrefix = counter.innerText.startsWith('+');
+          const hasPlusSuffix = counter.innerText.endsWith('+');
           
-          let startNumber = 0;
-          const duration = 1500; // مدة الحركة بالملي ثانية
-          const startTime = performance.now();
-          
-          const updateCounter = (currentTime) => {
-            const elapsedTime = currentTime - startTime;
-            const progress = Math.min(elapsedTime / duration, 1);
-            
-            // تأثير حركة سلس (Ease-out)
-            const easeProgress = 1 - Math.pow(1 - progress, 3);
-            const currentCount = Math.floor(easeProgress * targetNumber);
-            
-            let displayText = currentCount;
-            if (hasPlusPrefix) displayText = '+' + displayText;
-            if (hasPlusSuffix) displayText = displayText + '+';
-            
-            counter.innerText = displayText;
-            
-            if (progress < 1) {
-              requestAnimationFrame(updateCounter);
+          const updateCount = () => {
+            const current = +counter.innerText.replace('+', '');
+            const increment = Math.ceil(target / speed);
+
+            if (current < target) {
+              const nextValue = current + increment;
+              const finalValue = nextValue > target ? target : nextValue;
+              
+              if (hasPlusPrefix) counter.innerText = '+' + finalValue;
+              else if (hasPlusSuffix) counter.innerText = finalValue + '+';
+              else counter.innerText = finalValue;
+
+              setTimeout(updateCount, 20);
             } else {
-              counter.innerText = fullText; // التأكد من كتابة الرقم الأصلي بدقة عند الانتهاء
+              if (hasPlusPrefix) counter.innerText = '+' + target;
+              else if (hasPlusSuffix) counter.innerText = target + '+';
+              else counter.innerText = target;
             }
           };
           
-          requestAnimationFrame(updateCounter);
+          updateCount();
+          observer.unobserve(counter); // عشان يتحرك مرة واحدة بس وما يكرر مع كل نزول
         }
       });
+    };
+
+    const counterObserver = new IntersectionObserver(startCounters, {
+      threshold: 0.5 // يبدأ الحركة لما يظهر 50% من مربع الرقم بالشاشة
     });
+
+    counters.forEach(counter => counterObserver.observe(counter));
   </script>
 </body>
 </html>
