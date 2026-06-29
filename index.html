@@ -265,28 +265,28 @@
         <div class="col" data-aos="fade-up">
           <div class="stat-card">
             <i class="fa-solid fa-graduation-cap stat-icon"></i>
-            <span class="stat-number" data-target="+350">+0</span>
+            <span class="stat-number" data-target="350">0</span>
             <span class="stat-label">طالب مستفيد</span>
           </div>
         </div>
         <div class="col" data-aos="fade-up" data-aos-delay="100">
           <div class="stat-card">
             <i class="fa-solid fa-mosque stat-icon"></i>
-            <span class="stat-number" data-target="+18">+0</span>
+            <span class="stat-number" data-target="18">0</span>
             <span class="stat-label">حلقة قرآنية</span>
           </div>
         </div>
         <div class="col" data-aos="fade-up" data-aos-delay="200">
           <div class="stat-card">
             <i class="fa-solid fa-user-tie stat-icon"></i>
-            <span class="stat-number" data-target="+20">0</span>
+            <span class="stat-number" data-target="20">0</span>
             <span class="stat-label">معلم متقن</span>
           </div>
         </div>
         <div class="col" data-aos="fade-up" data-aos-delay="300">
           <div class="stat-card">
             <i class="fa-solid fa-book-open-reader stat-icon"></i>
-            <span class="stat-number" data-target="5000">0+</span>
+            <span class="stat-number" data-target="5000">0</span>
             <span class="stat-label">جزء مراجع</span>
           </div>
         </div>
@@ -411,7 +411,7 @@
         </div>
       </div>
     </div>
-  </footer>
+  </section>
 
   <div class="modal fade" id="certModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -432,46 +432,54 @@
   <script>
     AOS.init({ duration: 1000, once: true });
 
-    // كود تحريك الأرقام الذكي عند النزول لقسم الإحصائيات
+    // كود تحريك الأرقام التلقائي والمصحح بالكامل
     const counters = document.querySelectorAll('.stat-number');
-    const speed = 100; // سرعة العداد كل ما قل الرقم زادت السرعة
-
+    
     const startCounters = (entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const counter = entry.target;
-          const target = +counter.getAttribute('data-target');
-          const hasPlusPrefix = counter.innerText.startsWith('+');
-          const hasPlusSuffix = counter.innerText.endsWith('+');
-          
-          const updateCount = () => {
-            const current = +counter.innerText.replace('+', '');
-            const increment = Math.ceil(target / speed);
+          const target = parseInt(counter.getAttribute('data-target'), 10);
+          const duration = 2000; // مدة التحريك بالملي ثانية (ثانيتين)
+          const startTime = performance.now();
 
-            if (current < target) {
-              const nextValue = current + increment;
-              const finalValue = nextValue > target ? target : nextValue;
-              
-              if (hasPlusPrefix) counter.innerText = '+' + finalValue;
-              else if (hasPlusSuffix) counter.innerText = finalValue + '+';
-              else counter.innerText = finalValue;
-
-              setTimeout(updateCount, 20);
+          const updateCount = (currentTime) => {
+            const elapsedTime = currentTime - startTime;
+            const progress = Math.min(elapsedTime / duration, 1);
+            
+            // حساب القيمة الحالية بناءً على نسبة التقدم
+            const currentValue = Math.floor(progress * target);
+            
+            // إضافة علامة الزائد للأرقام بناءً على طبيعة الإحصائية الأصلية
+            if (target === 350 || target === 18) {
+              counter.innerText = `+${currentValue}`;
+            } else if (target === 5000) {
+              counter.innerText = `${currentValue}+`;
             } else {
-              if (hasPlusPrefix) counter.innerText = '+' + target;
-              else if (hasPlusSuffix) counter.innerText = target + '+';
-              else counter.innerText = target;
+              counter.innerText = currentValue;
+            }
+
+            if (progress < 1) {
+              requestAnimationFrame(updateCount);
+            } else {
+              if (target === 350 || target === 18) {
+                counter.innerText = `+${target}`;
+              } else if (target === 5000) {
+                counter.innerText = `${target}+`;
+              } else {
+                counter.innerText = target;
+              }
             }
           };
-          
-          updateCount();
-          observer.unobserve(counter); // عشان يتحرك مرة واحدة بس وما يكرر مع كل نزول
+
+          requestAnimationFrame(updateCount);
+          observer.unobserve(counter); // لكي يتحرك العداد مرة واحدة فقط عند النزول إليه
         }
       });
     };
 
     const counterObserver = new IntersectionObserver(startCounters, {
-      threshold: 0.5 // يبدأ الحركة لما يظهر 50% من مربع الرقم بالشاشة
+      threshold: 0.3 // يبدأ العداد عندما يظهر 30% من القسم على الشاشة
     });
 
     counters.forEach(counter => counterObserver.observe(counter));
