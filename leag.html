@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جدول الدوري</title>
+    <title>جدول الدوري - جامع الشريف</title>
     <style>
         :root {
             --dark-red: #800020; /* أحمر عودي */
@@ -178,18 +178,20 @@
 
         .match-teams {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
             font-weight: bold;
             margin-top: 6px;
+            font-size: 0.95rem;
         }
 
-        .vs {
+        .match-score {
             background-color: var(--dark-red);
             color: var(--white);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -222,22 +224,22 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="team-cell"><span class="rank">1</span><span class="badge">A</span><span>فريق الصقور</span></td>
-                            <td>12</td>
-                            <td>3</td>
-                            <td class="points">15</td>
-                        </tr>
-                        <tr>
-                            <td class="team-cell"><span class="rank">2</span><span class="badge">B</span><span>فريق الفرسان</span></td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td class="points">12</td>
-                        </tr>
-                        <tr>
-                            <td class="team-cell"><span class="rank">3</span><span class="badge">C</span><span>فريق النجوم</span></td>
-                            <td>8</td>
-                            <td>6</td>
+                            <td class="team-cell"><span class="rank">1</span><span class="badge">1</span><span>القمة</span></td>
+                            <td>7</td>
+                            <td>2</td>
                             <td class="points">9</td>
+                        </tr>
+                        <tr>
+                            <td class="team-cell"><span class="rank">2</span><span class="badge">2</span><span>الطليعة</span></td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td class="points">7</td>
+                        </tr>
+                        <tr>
+                            <td class="team-cell"><span class="rank">3</span><span class="badge">3</span><span>المناصرين</span></td>
+                            <td>0</td>
+                            <td>6</td>
+                            <td class="points">1</td>
                         </tr>
                     </tbody>
                 </table>
@@ -252,20 +254,25 @@
                     <thead>
                         <tr>
                             <th style="text-align: right; padding-right: 12px;">اللاعب</th>
-                            <th>الفريق</th>
                             <th>الأهداف</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="text-align: right; padding-right: 12px; font-weight: bold;">أحمد محمد</td>
-                            <td>فريق الصقور</td>
-                            <td class="points">7</td>
+                            <td style="text-align: right; padding-right: 12px; font-weight: bold;">راشد باوزير</td>
+                            <td class="points">3</td>
                         </tr>
                         <tr>
-                            <td style="text-align: right; padding-right: 12px; font-weight: bold;">خالد علي</td>
-                            <td>فريق الفرسان</td>
-                            <td class="points">5</td>
+                            <td style="text-align: right; padding-right: 12px; font-weight: bold;">عدي بكري</td>
+                            <td class="points">2</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right; padding-right: 12px; font-weight: bold;">يوسف فقيرة</td>
+                            <td class="points">2</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right; padding-right: 12px; font-weight: bold;">احمد الغامدي</td>
+                            <td class="points">1</td>
                         </tr>
                     </tbody>
                 </table>
@@ -274,21 +281,53 @@
 
         <!-- 3. قسم المباريات -->
         <div id="matches" class="tab-content">
-            <div class="section-title">جدول المباريات</div>
+            <div class="section-title">نتائج المباريات</div>
+
             <div class="match-card">
-                <div style="font-size: 0.8rem; color: #666;">الجولة الأولى - 8:00 مساءً</div>
                 <div class="match-teams">
-                    <span>فريق الصقور</span>
-                    <span class="vs">VS</span>
-                    <span>فريق الفرسان</span>
+                    <span>الطليعة</span>
+                    <span class="match-score">2 - 0</span>
+                    <span>القمة</span>
                 </div>
             </div>
+
             <div class="match-card">
-                <div style="font-size: 0.8rem; color: #666;">الجولة الأولى - 9:30 مساءً</div>
                 <div class="match-teams">
-                    <span>فريق النجوم</span>
-                    <span class="vs">VS</span>
-                    <span>فريق الأمل</span>
+                    <span>الطليعة</span>
+                    <span class="match-score">0 - 0</span>
+                    <span>المناصرين</span>
+                </div>
+            </div>
+
+            <div class="match-card">
+                <div class="match-teams">
+                    <span>الطليعة</span>
+                    <span class="match-score">0 - 2</span>
+                    <span>القمة</span>
+                </div>
+            </div>
+
+            <div class="match-card">
+                <div class="match-teams">
+                    <span>الطليعة</span>
+                    <span class="match-score">1 - 0</span>
+                    <span>المناصرين</span>
+                </div>
+            </div>
+
+            <div class="match-card">
+                <div class="match-teams">
+                    <span>القمة</span>
+                    <span class="match-score">2 - 0</span>
+                    <span>المناصرين</span>
+                </div>
+            </div>
+
+            <div class="match-card">
+                <div class="match-teams">
+                    <span>القمة</span>
+                    <span class="match-score">3 - 0</span>
+                    <span>المناصرين</span>
                 </div>
             </div>
         </div>
@@ -297,13 +336,7 @@
         <div id="squad" class="tab-content">
             <div class="section-title">التشكيلة المثالية</div>
             <div class="squad-card">
-                <strong>حارس المرمى:</strong> محمد العتيبي
-            </div>
-            <div class="squad-card">
-                <strong>خط الدفاع:</strong> سعد الدوسري، فهد الشمري
-            </div>
-            <div class="squad-card">
-                <strong>خط الهجوم:</strong> أحمد محمد، خالد علي
+                <strong>سيتم تحديث التشكيلة قريباً</strong>
             </div>
         </div>
 
