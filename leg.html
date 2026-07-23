@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول الدوري</title>
+    <style>
+        :root {
+            --dark-red: #800020; /* أحمر عودي */
+            --white: #ffffff;
+            --light-bg: #f8f9fa;
+            --text-color: #000000; /* خط أسود */
+            --border-color: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+        }
+
+        body {
+            background-color: var(--light-bg);
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            border: 2px solid var(--dark-red);
+        }
+
+        /* --- شريط التنقل الأعلى (Tabs) --- */
+        .nav-tabs {
+            display: flex;
+            background-color: var(--dark-red);
+            padding: 6px;
+            gap: 4px;
+            overflow-x: auto;
+            scrollbar-width: none; /* إخفاء شريط التمرير */
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 75px;
+            padding: 10px 8px;
+            border: none;
+            background: transparent;
+            color: var(--white);
+            font-weight: bold;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background-color: var(--white);
+            color: var(--text-color);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        /* --- محتوى القسم --- */
+        .content {
+            padding: 16px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            text-align: center;
+            border-bottom: 2px solid var(--dark-red);
+            padding-bottom: 6px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        /* --- جدول الدوري --- */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .league-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .league-table th {
+            background-color: #f0f0f0;
+            color: var(--text-color);
+            font-weight: 700;
+            padding: 10px 6px;
+            border-bottom: 2px solid var(--dark-red);
+        }
+
+        .league-table td {
+            padding: 12px 6px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+
+        .league-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .league-table tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        .team-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .rank {
+            font-weight: bold;
+            width: 18px;
+            text-align: center;
+        }
+
+        .badge {
+            background-color: var(--dark-red);
+            color: var(--white);
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .points {
+            font-weight: 800;
+            background-color: rgba(128, 0, 32, 0.08);
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- خيارات التنقل العلوية -->
+    <nav class="nav-tabs">
+        <button class="tab-btn active">الدوري</button>
+        <button class="tab-btn">الهدافين</button>
+        <button class="tab-btn">المباريات</button>
+        <button class="tab-btn">التشكيلة</button>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content">
+        <div class="section-title">جدول ترتيب الدوري</div>
+
+        <div class="table-responsive">
+            <table class="league-table">
+                <thead>
+                    <tr>
+                        <th style="text-align: right; padding-right: 12px;">الفريق</th>
+                        <th>له</th>
+                        <th>عليه</th>
+                        <th>النقاط</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- فريق 1 -->
+                    <tr>
+                        <td class="team-cell">
+                            <span class="rank">1</span>
+                            <span class="badge">A</span>
+                            <span>فريق الصقور</span>
+                        </td>
+                        <td>12</td>
+                        <td>3</td>
+                        <td class="points">15</td>
+                    </tr>
+                    <!-- فريق 2 -->
+                    <tr>
+                        <td class="team-cell">
+                            <span class="rank">2</span>
+                            <span class="badge">B</span>
+                            <span>فريق الفرسان</span>
+                        </td>
+                        <td>10</td>
+                        <td>5</td>
+                        <td class="points">12</td>
+                    </tr>
+                    <!-- فريق 3 -->
+                    <tr>
+                        <td class="team-cell">
+                            <span class="rank">3</span>
+                            <span class="badge">C</span>
+                            <span>فريق النجوم</span>
+                        </td>
+                        <td>8</td>
+                        <td>6</td>
+                        <td class="points">9</td>
+                    </tr>
+                    <!-- فريق 4 -->
+                    <tr>
+                        <td class="team-cell">
+                            <span class="rank">4</span>
+                            <span class="badge">D</span>
+                            <span>فريق الأمل</span>
+                        </td>
+                        <td>4</td>
+                        <td>9</td>
+                        <td class="points">4</td>
+                    </tr>
+                    <!-- فريق 5 -->
+                    <tr>
+                        <td class="team-cell">
+                            <span class="rank">5</span>
+                            <span class="badge">E</span>
+                            <span>فريق التحدي</span>
+                        </td>
+                        <td>2</td>
+                        <td>11</td>
+                        <td class="points">1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
